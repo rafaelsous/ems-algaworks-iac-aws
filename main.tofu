@@ -5,11 +5,17 @@ terraform {
       version = "~> 6.0"
     }
   }
+
+  backend "s3" {
+    bucket = "my-algadelivery-tfstate"
+    key    = "${var.environment}/s3/${var.bucket_name}/remote.tfstate"
+    region = var.aws_region
+  }
 }
 
 # Configure the AWS Provider
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
 }
 
 resource "aws_s3_bucket" "algadelivery-test-tofu" {
