@@ -13,11 +13,17 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "algadelivery-test-tofu" {
-  bucket = "algadelivery-test-tofu"
+  bucket = var.bucket_name
 
   tags = {
-    Name        = "algadelivery-test-tofu"
-    Environment = "Development"
+    Name        = var.bucket_name
+    Environment = var.environment
   }
 }
 
+resource "aws_s3_bucket_versioning" "versioning_example" {
+  bucket = aws_s3_bucket.algadelivery-test-tofu.id
+  versioning_configuration {
+    status = var.bucket_versioning
+  }
+}
