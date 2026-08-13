@@ -26,22 +26,18 @@ variable "subnet_pub_config" {
   type = map(object({
     cidr_block = string
     az : string
-    name : string
   }))
   default = {
     "public_a" = {
       cidr_block = "172.25.1.0/24"
       az         = "a"
-      name       = "Subnet Public A"
     },
     "public_b" = {
       cidr_block = "172.25.2.0/24"
       az         = "b"
-      name       = "Subnet Public B"
     },
     "public_c" = {
       cidr_block = "172.25.3.0/24"
       az         = "c"
-      name       = "Subnet Public C"
   } }
 }

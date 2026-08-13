@@ -17,3 +17,13 @@ output "subnet_public_arn" {
   description = "The ARNs of the public subnet"
   value       = [for subnet in aws_subnet.public : subnet.arn]
 }
+
+output "internet_gateway_id" {
+  description = "The ID of the Internet Gateway"
+  value       = aws_internet_gateway.algadelivery.id
+}
+
+output "internet_gateway_arn" {
+  description = "The ARN of the Internet Gateway"
+  value       = aws_internet_gateway.algadelivery.arn
+}

@@ -12,6 +12,14 @@ resource "aws_subnet" "public" {
   availability_zone = "${var.aws_region}${each.value.az}"
 
   tags = {
-    Name = each.value.name
+    Name = "${local.context_name}-pub-${each.value.az}"
+  }
+}
+
+resource "aws_internet_gateway" "algadelivery" {
+  vpc_id = aws_vpc.algadelivery.id
+
+  tags = {
+    Name = "${local.context_name}-igw"
   }
 }
