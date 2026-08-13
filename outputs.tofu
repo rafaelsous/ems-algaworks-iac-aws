@@ -27,3 +27,28 @@ output "internet_gateway_arn" {
   description = "The ARN of the Internet Gateway"
   value       = aws_internet_gateway.algadelivery.arn
 }
+
+output "subnet_private_management_id" {
+  description = "The IDs of the private management subnet"
+  value       = [for subnet in aws_subnet.private_management : subnet.id]
+}
+
+output "subnet_private_management_arn" {
+  description = "The ARNs of the private management subnet"
+  value       = [for subnet in aws_subnet.private_management : subnet.arn]
+}
+
+output "subnet_private_cluster_id" {
+  description = "The IDs of the private cluster subnet"
+  value       = [for subnet in aws_subnet.private_cluster : subnet.id]
+}
+
+output "subnet_private_cluster_arn" {
+  description = "The ARNs of the private cluster subnet"
+  value       = [for subnet in aws_subnet.private_cluster : subnet.arn]
+}
+
+output "nat_gateway_id" {
+  description = "The ID of the NAT Gateway"
+  value       = aws_nat_gateway.algadelivery.id
+}

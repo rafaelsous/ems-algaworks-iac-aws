@@ -41,3 +41,51 @@ variable "subnet_pub_config" {
       az         = "c"
   } }
 }
+
+variable "subnet_private_management_config" {
+  type = map(object({
+    cidr_block = string
+    az : string
+  }))
+  default = {
+    "private_a" = {
+      cidr_block = "172.25.4.0/24"
+      az         = "a"
+    },
+    "private_b" = {
+      cidr_block = "172.25.5.0/24"
+      az         = "b"
+    },
+    "private_c" = {
+      cidr_block = "172.25.6.0/24"
+      az         = "c"
+    }
+  }
+}
+
+variable "subnet_private_cluster_config" {
+  type = map(object({
+    cidr_block = string
+    az : string
+  }))
+  default = {
+    "private_a" = {
+      cidr_block = "172.25.7.0/24"
+      az         = "a"
+    },
+    "private_b" = {
+      cidr_block = "172.25.8.0/24"
+      az         = "b"
+    },
+    "private_c" = {
+      cidr_block = "172.25.9.0/24"
+      az         = "c"
+    }
+  }
+}
+
+variable "ngw_regional_mode" {
+  description = "Is the NAT Gateway in regional mode? (true for regional, false for zonal)"
+  type        = bool
+  default     = true
+}
