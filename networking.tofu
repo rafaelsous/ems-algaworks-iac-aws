@@ -5,32 +5,13 @@ resource "aws_vpc" "algadelivery" {
   }
 }
 
-resource "aws_subnet" "public_a" {
+resource "aws_subnet" "public" {
+  for_each          = var.subnet_pub_config
   vpc_id            = aws_vpc.algadelivery.id
-  cidr_block        = var.subnet_pub_config[0].cidr_block
-  availability_zone = "${var.aws_region}${var.subnet_pub_config[0].az}"
+  cidr_block        = each.value.cidr_block
+  availability_zone = "${var.aws_region}${each.value.az}"
 
   tags = {
-    Name = var.subnet_pub_config[0].name
-  }
-}
-
-resource "aws_subnet" "public_b" {
-  vpc_id            = aws_vpc.algadelivery.id
-  cidr_block        = var.subnet_pub_config[1].cidr_block
-  availability_zone = "${var.aws_region}${var.subnet_pub_config[1].az}"
-
-  tags = {
-    Name = var.subnet_pub_config[1].name
-  }
-}
-
-resource "aws_subnet" "public_c" {
-  vpc_id            = aws_vpc.algadelivery.id
-  cidr_block        = var.subnet_pub_config[2].cidr_block
-  availability_zone = "${var.aws_region}${var.subnet_pub_config[2].az}"
-
-  tags = {
-    Name = var.subnet_pub_config[2].name
+    Name = each.value.name
   }
 }
