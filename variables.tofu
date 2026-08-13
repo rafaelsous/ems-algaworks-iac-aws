@@ -1,7 +1,7 @@
-variable "bucket_name" {
-  description = "The name of the S3 bucket"
+variable "aws_region" {
+  description = "The region where the S3 bucket will be created"
   type        = string
-  default     = "algadelivery-test-tofu"
+  default     = "us-east-1"
 }
 
 variable "environment" {
@@ -10,14 +10,14 @@ variable "environment" {
   default     = "Development"
 }
 
-variable "bucket_versioning" {
-  description = "The versioning status for the S3 bucket (Enabled or Suspended or Disabled)"
+variable "vpc_cidr_block" {
+  description = "The CIDR block for the VPC"
   type        = string
-  default     = "Enabled"
+  default     = "172.25.0.0/16"
 }
 
-variable "aws_region" {
-  description = "The region where the S3 bucket will be created"
+variable "vpc_name" {
+  description = "The name of the VPC"
   type        = string
-  default     = "us-east-1"
+  default     = "algadelivery-vpc"
 }
