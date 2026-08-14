@@ -8,7 +8,7 @@ resource "aws_security_group" "bastion" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [local.internet_cidr_block]
+    cidr_blocks = [local.my_public_ip]
   }
 
   egress {
@@ -18,12 +18,9 @@ resource "aws_security_group" "bastion" {
     protocol    = "-1"
     cidr_blocks = [local.internet_cidr_block]
   }
-
-  tags = {
-    Name        = "bastion_sg"
-    Environment = var.environment
-    ManagedBy   = "OpenTofu"
-  }
+  tags = merge(local.common_tags, {
+    Name = "bastion_sg"
+  })
 }
 
 resource "aws_security_group" "security_group_private" {
@@ -47,9 +44,7 @@ resource "aws_security_group" "security_group_private" {
     cidr_blocks = [local.internet_cidr_block]
   }
 
-  tags = {
-    Name        = "private_sg"
-    Environment = var.environment
-    ManagedBy   = "OpenTofu"
-  }
+  tags = merge(local.common_tags, {
+    Name = "private_sg"
+  })
 }

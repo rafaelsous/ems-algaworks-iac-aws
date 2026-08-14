@@ -13,11 +13,9 @@ resource "aws_subnet" "public" {
   cidr_block        = each.value.cidr_block
   availability_zone = "${var.aws_region}${each.value.az}"
 
-  tags = {
-    Name        = "${local.context_name}-pub-${each.value.az}"
-    Environment = var.environment
-    ManagedBy   = "OpenTofu"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${local.context_name}-pub-${each.value.az}"
+  })
 }
 
 resource "aws_route_table" "public" {
@@ -28,11 +26,9 @@ resource "aws_route_table" "public" {
     gateway_id = aws_internet_gateway.algadelivery.id
   }
 
-  tags = {
-    Name        = "${local.context_name}-route-table-pub"
-    Environment = var.environment
-    ManagedBy   = "OpenTofu"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${local.context_name}-route-table-pub"
+  })
 }
 
 resource "aws_route_table_association" "public" {
@@ -44,11 +40,9 @@ resource "aws_route_table_association" "public" {
 resource "aws_internet_gateway" "algadelivery" {
   vpc_id = aws_vpc.algadelivery.id
 
-  tags = {
-    Name        = "${local.context_name}-igw"
-    Environment = var.environment
-    ManagedBy   = "OpenTofu"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${local.context_name}-igw"
+  })
 }
 
 resource "aws_subnet" "private_management" {
@@ -57,11 +51,9 @@ resource "aws_subnet" "private_management" {
   cidr_block        = each.value.cidr_block
   availability_zone = "${var.aws_region}${each.value.az}"
 
-  tags = {
-    Name        = "${local.context_name}-priv-mgmt-${each.value.az}"
-    Environment = var.environment
-    ManagedBy   = "OpenTofu"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${local.context_name}-priv-mgmt-${each.value.az}"
+  })
 }
 
 resource "aws_subnet" "private_cluster" {
@@ -70,22 +62,18 @@ resource "aws_subnet" "private_cluster" {
   cidr_block        = each.value.cidr_block
   availability_zone = "${var.aws_region}${each.value.az}"
 
-  tags = {
-    Name        = "${local.context_name}-priv-cluster-${each.value.az}"
-    Environment = var.environment
-    ManagedBy   = "OpenTofu"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${local.context_name}-priv-cluster-${each.value.az}"
+  })
 }
 
 resource "aws_nat_gateway" "algadelivery" {
   vpc_id            = aws_vpc.algadelivery.id
   availability_mode = local.ngw_regional_mode
 
-  tags = {
-    Name        = "${local.context_name}-ngw"
-    Environment = var.environment
-    ManagedBy   = "OpenTofu"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${local.context_name}-ngw"
+  })
 }
 
 resource "aws_route_table" "private" {
@@ -96,11 +84,9 @@ resource "aws_route_table" "private" {
     gateway_id = aws_nat_gateway.algadelivery.id
   }
 
-  tags = {
-    Name        = "${local.context_name}-route-table-private"
-    Environment = var.environment
-    ManagedBy   = "OpenTofu"
-  }
+  tags = merge(local.common_tags, {
+    Name = "${local.context_name}-route-table-private"
+  })
 }
 
 resource "aws_route_table_association" "private_management" {
