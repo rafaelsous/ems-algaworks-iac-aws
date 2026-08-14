@@ -89,3 +89,15 @@ variable "ngw_regional_mode" {
   type        = bool
   default     = true
 }
+
+variable "instance_type" {
+  description = "The type of the EC2 instance"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "key_pair_name" {
+  description = "The name of the key pair to use for the EC2 instances"
+  type        = string
+  default     = "algadelivery-tofu"
+}

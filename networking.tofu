@@ -80,8 +80,8 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.algadelivery.id
 
   route {
-    cidr_block = local.internet_cidr_block
-    gateway_id = aws_nat_gateway.algadelivery.id
+    cidr_block     = local.internet_cidr_block
+    nat_gateway_id = aws_nat_gateway.algadelivery.id
   }
 
   tags = merge(local.common_tags, {
