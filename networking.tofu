@@ -20,6 +20,27 @@ resource "aws_subnet" "public" {
   }
 }
 
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.algadelivery.id
+
+  route {
+    cidr_block = local.internet_cidr_block
+    gateway_id = aws_internet_gateway.algadelivery.id
+  }
+
+  tags = {
+    Name        = "${local.context_name}-route-table-pub"
+    Environment = var.environment
+    ManagedBy   = "OpenTofu"
+  }
+}
+
+resource "aws_route_table_association" "public" {
+  for_each       = aws_subnet.public
+  subnet_id      = each.value.id
+  route_table_id = aws_route_table.public.id
+}
+
 resource "aws_internet_gateway" "algadelivery" {
   vpc_id = aws_vpc.algadelivery.id
 
@@ -65,4 +86,31 @@ resource "aws_nat_gateway" "algadelivery" {
     Environment = var.environment
     ManagedBy   = "OpenTofu"
   }
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.algadelivery.id
+
+  route {
+    cidr_block = local.internet_cidr_block
+    gateway_id = aws_nat_gateway.algadelivery.id
+  }
+
+  tags = {
+    Name        = "${local.context_name}-route-table-private"
+    Environment = var.environment
+    ManagedBy   = "OpenTofu"
+  }
+}
+
+resource "aws_route_table_association" "private_management" {
+  for_each       = aws_subnet.private_management
+  subnet_id      = each.value.id
+  route_table_id = aws_route_table.private.id
+}
+
+resource "aws_route_table_association" "private_cluster" {
+  for_each       = aws_subnet.private_cluster
+  subnet_id      = each.value.id
+  route_table_id = aws_route_table.private.id
 }
