@@ -62,3 +62,48 @@ output "route_table_private_id" {
   description = "The ID of the private route table"
   value       = aws_route_table.private.id
 }
+
+output "security_group_bastion_id" {
+  description = "The ID of the bastion security group"
+  value       = aws_security_group.bastion.id
+}
+
+output "security_group_private_id" {
+  description = "The ID of the private security group"
+  value       = aws_security_group.security_group_private.id
+}
+
+output "ec2_bastion_id" {
+  description = "The ID of the bastion EC2 instance"
+  value       = aws_instance.bastion.id
+}
+
+output "ec2_bastion_arn" {
+  description = "The ARN of the bastion EC2 instance"
+  value       = aws_instance.bastion.arn
+}
+
+output "ec2_bastion_public_ip" {
+  description = "The public IP of the bastion EC2 instance"
+  value       = aws_eip.bastion_eip.public_ip
+}
+
+output "ec2_vm_private_id" {
+  description = "The ID of the private EC2 instance"
+  value       = aws_instance.vm_private.id
+}
+
+output "ec2_vm_private_arn" {
+  description = "The ARN of the private EC2 instance"
+  value       = aws_instance.vm_private.arn
+}
+
+output "ec2_vm_private_private_ip" {
+  description = "The private IP of the private EC2 instance"
+  value       = aws_instance.vm_private.private_ip
+}
+
+output "key_pair_arn" {
+  description = "The ARN of the key pair"
+  value       = aws_key_pair.algadelivery-tofu.arn
+}
