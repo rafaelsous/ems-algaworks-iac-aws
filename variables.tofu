@@ -101,3 +101,27 @@ variable "key_pair_name" {
   type        = string
   default     = "algadelivery-tofu"
 }
+
+variable "bastion_ingress_rules" {
+  description = "List of ingress rules for the bastion security group"
+  type = list(object({
+    description = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+  default = []
+}
+
+variable "bastion_egress_rules" {
+  description = "List of egress rules for the bastion security group"
+  type = list(object({
+    description = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+  default = []
+}

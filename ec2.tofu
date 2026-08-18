@@ -31,21 +31,3 @@ resource "aws_instance" "bastion" {
 
   depends_on = [aws_key_pair.algadelivery-tofu]
 }
-
-resource "aws_instance" "vm_private" {
-  ami                         = data.aws_ami.ubuntu.id
-  instance_type               = var.instance_type
-  subnet_id                   = aws_subnet.private_management["private_a"].id
-  vpc_security_group_ids      = [aws_security_group.security_group_private.id]
-  key_name                    = var.key_pair_name
-  associate_public_ip_address = true
-
-  tags = merge(
-    local.common_tags,
-    {
-      Name = "${local.context_name}-vm_private"
-    }
-  )
-
-  depends_on = [aws_key_pair.algadelivery-tofu]
-}
