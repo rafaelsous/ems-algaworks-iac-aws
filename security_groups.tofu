@@ -1,7 +1,7 @@
 resource "aws_security_group" "bastion" {
   name        = "bastion"
   description = "Allow TLS inbound traffic and all outbound traffic"
-  vpc_id      = aws_vpc.algadelivery.id
+  vpc_id      = module.vpc.vpc_id
 
   dynamic "ingress" {
     for_each = local.bastion_ingress_rules

@@ -1,66 +1,66 @@
 output "vpc_id" {
   description = "The ID of the VPC"
-  value       = aws_vpc.algadelivery.id
+  value       = module.vpc.vpc_id
 }
 
 output "vpc_arn" {
   description = "The ARN of the VPC"
-  value       = aws_vpc.algadelivery.arn
+  value       = module.vpc.vpc_arn
 }
 
-output "subnet_public_id" {
+output "subnet_public_ids" {
   description = "The IDs of the public subnet"
-  value       = [for subnet in aws_subnet.public : subnet.id]
+  value       = module.vpc.subnet_public_ids
 }
 
-output "subnet_public_arn" {
+output "subnet_public_arns" {
   description = "The ARNs of the public subnet"
-  value       = [for subnet in aws_subnet.public : subnet.arn]
+  value       = module.vpc.subnet_public_arns
 }
 
 output "internet_gateway_id" {
   description = "The ID of the Internet Gateway"
-  value       = aws_internet_gateway.algadelivery.id
+  value       = module.vpc.internet_gateway_id
 }
 
 output "internet_gateway_arn" {
   description = "The ARN of the Internet Gateway"
-  value       = aws_internet_gateway.algadelivery.arn
+  value       = module.vpc.internet_gateway_arn
 }
 
-output "subnet_private_management_id" {
+output "subnet_private_management_ids" {
   description = "The IDs of the private management subnet"
-  value       = [for subnet in aws_subnet.private_management : subnet.id]
+  value       = module.vpc.subnet_private_management_ids
 }
 
-output "subnet_private_management_arn" {
+output "subnet_private_management_arns" {
   description = "The ARNs of the private management subnet"
-  value       = [for subnet in aws_subnet.private_management : subnet.arn]
+  value       = module.vpc.subnet_private_management_arns
 }
 
-output "subnet_private_cluster_id" {
+output "subnet_private_cluster_ids" {
   description = "The IDs of the private cluster subnet"
-  value       = [for subnet in aws_subnet.private_cluster : subnet.id]
+  value       = module.vpc.subnet_private_cluster_ids
 }
 
-output "subnet_private_cluster_arn" {
+output "subnet_private_cluster_arns" {
   description = "The ARNs of the private cluster subnet"
-  value       = [for subnet in aws_subnet.private_cluster : subnet.arn]
+  value       = module.vpc.subnet_private_cluster_arns
 }
 
 output "nat_gateway_id" {
   description = "The ID of the NAT Gateway"
-  value       = aws_nat_gateway.algadelivery.id
+  value       = module.vpc.nat_gateway_id
 }
 
 output "route_table_public_id" {
   description = "The ID of the public route table"
-  value       = aws_route_table.public.id
+  value       = module.vpc.route_table_public_id
 }
 
 output "route_table_private_id" {
   description = "The ID of the private route table"
-  value       = aws_route_table.private.id
+  value       = module.vpc.route_table_private_id
 }
 
 output "security_group_bastion_id" {
