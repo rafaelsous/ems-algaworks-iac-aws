@@ -75,26 +75,26 @@ variable "key_pair_name" {
   default     = "algadelivery-tofu"
 }
 
-variable "bastion_ingress_rules" {
-  description = "List of ingress rules for the bastion security group"
-  type = list(object({
+variable "bastion_security_group_config" {
+  type = object({
+    name        = string
     description = string
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_blocks = list(string)
-  }))
-  default = []
-}
 
-variable "bastion_egress_rules" {
-  description = "List of egress rules for the bastion security group"
-  type = list(object({
-    description = string
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_blocks = list(string)
-  }))
-  default = []
+    ingress_rules = list(object({
+      description = string
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+    }))
+
+    egress_rules = list(object({
+      description = string
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+    }))
+  })
+  default = null
 }

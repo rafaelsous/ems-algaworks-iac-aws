@@ -1,33 +1,13 @@
-resource "tls_private_key" "algadelivery-tofu" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
+module "bastion" {
+  source = "./modules/ec2"
 
-resource "aws_key_pair" "algadelivery-tofu" {
-  key_name   = var.key_pair_name
-  public_key = tls_private_key.algadelivery-tofu.public_key_openssh
-}
-
-resource "local_sensitive_file" "private_key" {
-  content         = tls_private_key.algadelivery-tofu.private_key_pem
-  filename        = "${path.module}/${var.key_pair_name}.pem"
-  file_permission = "0400"
-}
-
-resource "aws_instance" "bastion" {
-  ami                         = data.aws_ami.ubuntu.id
-  instance_type               = var.instance_type
-  subnet_id                   = module.vpc.subnet_public_ids["public"][0]
-  vpc_security_group_ids      = [aws_security_group.bastion.id]
-  key_name                    = var.key_pair_name
-  associate_public_ip_address = true
-
-  tags = merge(
-    local.common_tags,
-    {
-      Name = "${local.context_name}-bastion"
-    }
-  )
-
-  depends_on = [aws_key_pair.algadelivery-tofu]
+  name                  = "bastion"
+  instance_type         = var.instance_type
+  key_pair_name         = var.key_pair_name
+  ami_id                = data.aws_ami.ubuntu.id
+  security_group_config = local.bastion_security_group_config
+  subnet_id             = module.vpc.subnet_public_ids["public"][0]
+  vpc_id                = module.vpc.vpc_id
+  common_tags           = local.common_tags
+  enabled_eip           = true
 }
