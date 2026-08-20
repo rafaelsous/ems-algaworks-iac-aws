@@ -17,7 +17,7 @@ resource "local_sensitive_file" "private_key" {
 resource "aws_instance" "bastion" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
-  subnet_id                   = module.vpc.subnet_public_ids[0]
+  subnet_id                   = module.vpc.subnet_public_ids["public"][0]
   vpc_security_group_ids      = [aws_security_group.bastion.id]
   key_name                    = var.key_pair_name
   associate_public_ip_address = true

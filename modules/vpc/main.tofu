@@ -6,13 +6,13 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "public" {
-  for_each          = var.subnet_pub_config
+  for_each          = local.subnet_public_config
   vpc_id            = aws_vpc.main.id
   cidr_block        = each.value.cidr_block
   availability_zone = "${var.aws_region}${each.value.az}"
 
   tags = merge(var.common_tags, {
-    Name = "${var.context_name}-pub-${each.value.az}"
+    Name = "${var.context_name}-pub-${each.value.group}-${each.value.az}"
   })
 }
 
@@ -43,25 +43,14 @@ resource "aws_internet_gateway" "main" {
   })
 }
 
-resource "aws_subnet" "private_management" {
-  for_each          = var.subnet_private_management_config
+resource "aws_subnet" "private" {
+  for_each          = local.subnet_private_config
   vpc_id            = aws_vpc.main.id
   cidr_block        = each.value.cidr_block
   availability_zone = "${var.aws_region}${each.value.az}"
 
   tags = merge(var.common_tags, {
-    Name = "${var.context_name}-priv-mgmt-${each.value.az}"
-  })
-}
-
-resource "aws_subnet" "private_cluster" {
-  for_each          = var.subnet_private_cluster_config
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = each.value.cidr_block
-  availability_zone = "${var.aws_region}${each.value.az}"
-
-  tags = merge(var.common_tags, {
-    Name = "${var.context_name}-priv-cluster-${each.value.az}"
+    Name = "${var.context_name}-priv-${each.value.group}-${each.value.az}"
   })
 }
 
@@ -87,14 +76,8 @@ resource "aws_route_table" "private" {
   })
 }
 
-resource "aws_route_table_association" "private_management" {
-  for_each       = aws_subnet.private_management
-  subnet_id      = each.value.id
-  route_table_id = aws_route_table.private.id
-}
-
-resource "aws_route_table_association" "private_cluster" {
-  for_each       = aws_subnet.private_cluster
+resource "aws_route_table_association" "private" {
+  for_each       = aws_subnet.private
   subnet_id      = each.value.id
   route_table_id = aws_route_table.private.id
 }

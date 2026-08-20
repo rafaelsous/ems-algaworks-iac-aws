@@ -10,12 +10,22 @@ output "vpc_arn" {
 
 output "subnet_public_ids" {
   description = "The IDs of the public subnet"
-  value       = [for subnet in aws_subnet.public : subnet.id]
+  value = {
+    for group_name in keys(var.subnet_public_config) : group_name => [
+      for subnet_key, subnet in aws_subnet.public : subnet.id
+      if local.subnet_public_config[subnet_key].group == group_name
+    ]
+  }
 }
 
 output "subnet_public_arns" {
   description = "The ARNs of the public subnet"
-  value       = [for subnet in aws_subnet.public : subnet.arn]
+  value = {
+    for group_name in keys(var.subnet_public_config) : group_name => [
+      for subnet_key, subnet in aws_subnet.public : subnet.arn
+      if local.subnet_public_config[subnet_key].group == group_name
+    ]
+  }
 }
 
 output "internet_gateway_id" {
@@ -28,24 +38,24 @@ output "internet_gateway_arn" {
   value       = aws_internet_gateway.main.arn
 }
 
-output "subnet_private_management_ids" {
+output "subnet_private_ids" {
   description = "The IDs of the private management subnet"
-  value       = [for subnet in aws_subnet.private_management : subnet.id]
+  value = {
+    for group_name in keys(var.subnet_private_config) : group_name => [
+      for subnet_key, subnet in aws_subnet.private : subnet.id
+      if local.subnet_private_config[subnet_key].group == group_name
+    ]
+  }
 }
 
-output "subnet_private_management_arns" {
+output "subnet_private_arns" {
   description = "The ARNs of the private management subnet"
-  value       = [for subnet in aws_subnet.private_management : subnet.arn]
-}
-
-output "subnet_private_cluster_ids" {
-  description = "The IDs of the private cluster subnet"
-  value       = [for subnet in aws_subnet.private_cluster : subnet.id]
-}
-
-output "subnet_private_cluster_arns" {
-  description = "The ARNs of the private cluster subnet"
-  value       = [for subnet in aws_subnet.private_cluster : subnet.arn]
+  value = {
+    for group_name in keys(var.subnet_private_config) : group_name => [
+      for subnet_key, subnet in aws_subnet.private : subnet.arn
+      if local.subnet_private_config[subnet_key].group == group_name
+    ]
+  }
 }
 
 output "nat_gateway_id" {

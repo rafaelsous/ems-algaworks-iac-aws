@@ -22,64 +22,37 @@ variable "vpc_name" {
   default     = "algadelivery-vpc"
 }
 
-variable "subnet_pub_config" {
-  type = map(object({
+variable "subnet_public_config" {
+  description = "Configuration for public subnets grouped by name (e.g., public)"
+  type = map(map(object({
     cidr_block = string
     az : string
-  }))
+  })))
   default = {
-    "public_a" = {
-      cidr_block = "172.25.1.0/24"
-      az         = "a"
-    },
-    "public_b" = {
-      cidr_block = "172.25.2.0/24"
-      az         = "b"
-    },
-    "public_c" = {
-      cidr_block = "172.25.3.0/24"
-      az         = "c"
-  } }
-}
-
-variable "subnet_private_management_config" {
-  type = map(object({
-    cidr_block = string
-    az : string
-  }))
-  default = {
-    "private_a" = {
-      cidr_block = "172.25.4.0/24"
-      az         = "a"
-    },
-    "private_b" = {
-      cidr_block = "172.25.5.0/24"
-      az         = "b"
-    },
-    "private_c" = {
-      cidr_block = "172.25.6.0/24"
-      az         = "c"
+    public = {
+      "pub_a" = { cidr_block = "172.25.1.0/24", az = "a" },
+      "pub_b" = { cidr_block = "172.25.2.0/24", az = "b" },
+      "pub_c" = { cidr_block = "172.25.3.0/24", az = "c" }
     }
   }
 }
 
-variable "subnet_private_cluster_config" {
-  type = map(object({
+variable "subnet_private_config" {
+  description = "Configuration for private subnets grouped by name (e.g., management, cluster)"
+  type = map(map(object({
     cidr_block = string
     az : string
-  }))
+  })))
   default = {
-    "private_a" = {
-      cidr_block = "172.25.7.0/24"
-      az         = "a"
+    management = {
+      "private_mgmt_a" = { cidr_block = "172.25.4.0/24", az = "a" },
+      "private_mgmt_b" = { cidr_block = "172.25.5.0/24", az = "b" },
+      "private_mgmt_c" = { cidr_block = "172.25.6.0/24", az = "c" }
     },
-    "private_b" = {
-      cidr_block = "172.25.8.0/24"
-      az         = "b"
-    },
-    "private_c" = {
-      cidr_block = "172.25.9.0/24"
-      az         = "c"
+    cluster = {
+      "private_cluster_a" = { cidr_block = "172.25.7.0/24", az = "a" },
+      "private_cluster_b" = { cidr_block = "172.25.8.0/24", az = "b" },
+      "private_cluster_c" = { cidr_block = "172.25.9.0/24", az = "c" }
     }
   }
 }

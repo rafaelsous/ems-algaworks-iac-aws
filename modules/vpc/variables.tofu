@@ -13,12 +13,12 @@ variable "vpc_name" {
   type        = string
 }
 
-variable "subnet_pub_config" {
+variable "subnet_public_config" {
   description = "Configuration for public subnets"
-  type = map(object({
+  type = map(map(object({
     cidr_block = string
     az : string
-  }))
+  })))
 }
 
 variable "context_name" {
@@ -26,20 +26,12 @@ variable "context_name" {
   type        = string
 }
 
-variable "subnet_private_management_config" {
-  description = "Configuration for private management subnets"
-  type = map(object({
+variable "subnet_private_config" {
+  description = "Configuration for private subnets grouped by name (e.g., management, cluster)"
+  type = map(map(object({
     cidr_block = string
     az : string
-  }))
-}
-
-variable "subnet_private_cluster_config" {
-  description = "Configuration for private cluster subnets"
-  type = map(object({
-    cidr_block = string
-    az : string
-  }))
+  })))
 }
 
 variable "ngw_regional_mode" {

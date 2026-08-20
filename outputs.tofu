@@ -10,12 +10,12 @@ output "vpc_arn" {
 
 output "subnet_public_ids" {
   description = "The IDs of the public subnet"
-  value       = module.vpc.subnet_public_ids
+  value       = module.vpc.subnet_public_ids["public"]
 }
 
 output "subnet_public_arns" {
   description = "The ARNs of the public subnet"
-  value       = module.vpc.subnet_public_arns
+  value       = module.vpc.subnet_public_arns["public"]
 }
 
 output "internet_gateway_id" {
@@ -30,22 +30,22 @@ output "internet_gateway_arn" {
 
 output "subnet_private_management_ids" {
   description = "The IDs of the private management subnet"
-  value       = module.vpc.subnet_private_management_ids
+  value       = module.vpc.subnet_private_ids["management"]
 }
 
 output "subnet_private_management_arns" {
   description = "The ARNs of the private management subnet"
-  value       = module.vpc.subnet_private_management_arns
+  value       = module.vpc.subnet_private_arns["management"]
 }
 
 output "subnet_private_cluster_ids" {
   description = "The IDs of the private cluster subnet"
-  value       = module.vpc.subnet_private_cluster_ids
+  value       = module.vpc.subnet_private_ids["cluster"]
 }
 
 output "subnet_private_cluster_arns" {
   description = "The ARNs of the private cluster subnet"
-  value       = module.vpc.subnet_private_cluster_arns
+  value       = module.vpc.subnet_private_arns["cluster"]
 }
 
 output "nat_gateway_id" {
