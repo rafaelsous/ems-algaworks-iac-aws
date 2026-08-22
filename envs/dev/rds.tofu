@@ -75,9 +75,9 @@ resource "aws_db_instance" "algadelivery" {
   instance_class    = var.db_instance_class
   allocated_storage = var.db_allocated_storage
 
-  username = var.db_username
-  password = random_password.db_password.result
-  port     = local.db_port
+  username                    = var.db_username
+  manage_master_user_password = true
+  port                        = local.db_port
 
   parameter_group_name   = aws_db_parameter_group.algadelivery.name
   db_subnet_group_name   = aws_db_subnet_group.algadelivery.name
@@ -90,9 +90,8 @@ resource "aws_db_instance" "algadelivery" {
   apply_immediately = true
 }
 
-output "db_password" {
-  value     = random_password.db_password.result
-  sensitive = true
+output "db_password_arn" {
+  value = aws_db_instance.algadelivery.master_user_secret[0].secret_arn
 }
 
 output "db_endpoint" {
