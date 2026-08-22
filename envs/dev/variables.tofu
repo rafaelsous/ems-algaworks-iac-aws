@@ -53,6 +53,11 @@ variable "subnet_private_config" {
       "private_cluster_a" = { cidr_block = "172.25.7.0/24", az = "a" },
       "private_cluster_b" = { cidr_block = "172.25.8.0/24", az = "b" },
       "private_cluster_c" = { cidr_block = "172.25.9.0/24", az = "c" }
+    },
+    database = {
+      "private_db_a" = { cidr_block = "172.25.10.0/24", az = "a" },
+      "private_db_b" = { cidr_block = "172.25.11.0/24", az = "b" },
+      "private_db_c" = { cidr_block = "172.25.12.0/24", az = "c" }
     }
   }
 }
@@ -97,4 +102,73 @@ variable "bastion_security_group_config" {
     }))
   })
   default = null
+}
+
+variable "db_subnet_group_name" {
+  description = "The name of the RDS DB subnet group"
+  type        = string
+  default     = "algadelivery-db-subnet-group"
+}
+
+variable "db_parameter_group_name" {
+  description = "The name of the RDS DB parameter group"
+  type        = string
+  default     = "algadelivery-db-parameter-group"
+}
+
+variable "db_parameter_group_options" {
+  description = "Additional options for the RDS DB parameter group"
+  type        = map(string)
+  default = {
+    max_connections          = "300"
+    shared_preload_libraries = "pg_stat_statements,pgaudit"
+  }
+}
+
+variable "db_engine" {
+  description = "The database engine for the RDS instance"
+  type        = string
+  default     = "postgres"
+}
+
+variable "db_engine_version" {
+  description = "The database engine version for the RDS instance"
+  type        = string
+  default     = "18"
+}
+
+variable "db_name" {
+  description = "The name of the database to create when the DB instance is created"
+  type        = string
+  default     = "delivery"
+}
+
+variable "db_instance_class" {
+  description = "The instance class for the RDS DB instance"
+  type        = string
+  default     = "db.t4g.micro"
+}
+
+variable "db_username" {
+  description = "The username for the RDS DB instance"
+  type        = string
+  default     = "postgres"
+}
+
+variable "db_allocated_storage" {
+  description = "The allocated storage in gigabytes for the RDS DB instance"
+  type        = number
+  default     = 20
+}
+
+variable "db_multi_az" {
+  description = "Specifies if the RDS instance is multi-AZ"
+  type        = bool
+  default     = false
+}
+
+variable "db_skip_final_snapshot" {
+  description = "Determines whether a final DB snapshot is created before the DB instance is deleted"
+  type        = bool
+  default     = false
 }

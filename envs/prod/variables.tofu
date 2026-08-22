@@ -53,6 +53,11 @@ variable "subnet_private_config" {
       "private_cluster_a" = { cidr_block = "172.26.7.0/24", az = "a" },
       "private_cluster_b" = { cidr_block = "172.26.8.0/24", az = "b" },
       "private_cluster_c" = { cidr_block = "172.26.9.0/24", az = "c" }
+    },
+    database = {
+      "private_db_a" = { cidr_block = "172.26.10.0/24", az = "a" },
+      "private_db_b" = { cidr_block = "172.26.11.0/24", az = "b" },
+      "private_db_c" = { cidr_block = "172.26.12.0/24", az = "c" }
     }
   }
 }
