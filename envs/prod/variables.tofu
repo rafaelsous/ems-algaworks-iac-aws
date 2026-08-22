@@ -7,13 +7,13 @@ variable "aws_region" {
 variable "environment" {
   description = "The environment for the S3 bucket (Development, Homolog, Production)"
   type        = string
-  default     = "Development"
+  default     = "production"
 }
 
 variable "vpc_cidr_block" {
   description = "The CIDR block for the VPC"
   type        = string
-  default     = "172.25.0.0/16"
+  default     = "172.26.0.0/16"
 }
 
 variable "vpc_name" {
@@ -30,9 +30,9 @@ variable "subnet_public_config" {
   })))
   default = {
     public = {
-      "pub_a" = { cidr_block = "172.25.1.0/24", az = "a" },
-      "pub_b" = { cidr_block = "172.25.2.0/24", az = "b" },
-      "pub_c" = { cidr_block = "172.25.3.0/24", az = "c" }
+      "pub_a" = { cidr_block = "172.26.1.0/24", az = "a" },
+      "pub_b" = { cidr_block = "172.26.2.0/24", az = "b" },
+      "pub_c" = { cidr_block = "172.26.3.0/24", az = "c" }
     }
   }
 }
@@ -45,14 +45,14 @@ variable "subnet_private_config" {
   })))
   default = {
     management = {
-      "private_mgmt_a" = { cidr_block = "172.25.4.0/24", az = "a" },
-      "private_mgmt_b" = { cidr_block = "172.25.5.0/24", az = "b" },
-      "private_mgmt_c" = { cidr_block = "172.25.6.0/24", az = "c" }
+      "private_mgmt_a" = { cidr_block = "172.26.4.0/24", az = "a" },
+      "private_mgmt_b" = { cidr_block = "172.26.5.0/24", az = "b" },
+      "private_mgmt_c" = { cidr_block = "172.26.6.0/24", az = "c" }
     },
     cluster = {
-      "private_cluster_a" = { cidr_block = "172.25.7.0/24", az = "a" },
-      "private_cluster_b" = { cidr_block = "172.25.8.0/24", az = "b" },
-      "private_cluster_c" = { cidr_block = "172.25.9.0/24", az = "c" }
+      "private_cluster_a" = { cidr_block = "172.26.7.0/24", az = "a" },
+      "private_cluster_b" = { cidr_block = "172.26.8.0/24", az = "b" },
+      "private_cluster_c" = { cidr_block = "172.26.9.0/24", az = "c" }
     }
   }
 }

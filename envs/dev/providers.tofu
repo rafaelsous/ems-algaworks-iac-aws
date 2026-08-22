@@ -23,7 +23,7 @@ terraform {
 
   backend "s3" {
     bucket = "my-algadelivery-tfstate"
-    key    = "${var.environment}/networking/remote.tfstate"
+    key    = "algadelivery/${var.environment}/remote.tfstate"
     region = var.aws_region
   }
 }
