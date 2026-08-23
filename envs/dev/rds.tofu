@@ -19,6 +19,9 @@ module "database" {
   db_parameter_group_name    = var.db_parameter_group_name
   db_parameter_group_options = var.db_parameter_group_options
 
+  db_backup_retention_period = var.db_backup_retention_period
+  db_backup_window           = var.db_backup_window
+  db_maintenance_window      = var.db_maintenance_window
 
   common_tags = merge(
     local.common_tags, {

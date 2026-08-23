@@ -98,3 +98,21 @@ variable "vpc_id" {
   description = "The ID of the VPC where the RDS instance will be launched"
   type        = string
 }
+
+variable "db_backup_retention_period" {
+  description = "The number of days to retain backups for the RDS instance"
+  type        = number
+  default     = 1
+}
+
+variable "db_backup_window" {
+  description = "The daily time range during which automated backups are created"
+  type        = string
+  default     = "03:00-04:00"
+}
+
+variable "db_maintenance_window" {
+  description = "The weekly time range during which system maintenance can occur"
+  type        = string
+  default     = "Mon:00:00-Mon:01:00"
+}

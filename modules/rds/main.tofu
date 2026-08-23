@@ -31,12 +31,15 @@ resource "aws_db_parameter_group" "main" {
 }
 
 resource "aws_db_instance" "main" {
-  identifier        = var.db_instance_identifier
-  db_name           = var.db_name
-  engine            = var.db_engine
-  engine_version    = var.db_engine_version
-  instance_class    = var.db_instance_class
-  allocated_storage = var.db_allocated_storage
+  identifier              = var.db_instance_identifier
+  db_name                 = var.db_name
+  engine                  = var.db_engine
+  engine_version          = var.db_engine_version
+  instance_class          = var.db_instance_class
+  allocated_storage       = var.db_allocated_storage
+  backup_retention_period = var.db_backup_retention_period
+  backup_window           = var.db_backup_window
+  maintenance_window      = var.db_maintenance_window
 
   username                    = var.db_username
   manage_master_user_password = true
