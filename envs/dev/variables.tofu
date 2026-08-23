@@ -170,5 +170,41 @@ variable "db_multi_az" {
 variable "db_skip_final_snapshot" {
   description = "Determines whether a final DB snapshot is created before the DB instance is deleted"
   type        = bool
-  default     = false
+  default     = true
+}
+
+variable "db_instance_identifier" {
+  description = "The identifier for the RDS DB instance"
+  type        = string
+  default     = "algadelivery-db"
+}
+
+variable "db_port" {
+  description = "The port on which the DB instance accepts connections"
+  type        = number
+  default     = 5432
+}
+
+variable "db_security_group_config" {
+  type = object({
+    name        = string
+    description = string
+
+    ingress_rules = list(object({
+      description = string
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+    }))
+
+    egress_rules = list(object({
+      description = string
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+    }))
+  })
+  default = null
 }

@@ -10,7 +10,7 @@ locals {
   }
 
   bastion_security_group_config = var.bastion_security_group_config != null ? var.bastion_security_group_config : {
-    name        = "${var.environment}-${local.context_name}-bastion_sg"
+    name        = "${var.environment}-${local.context_name}-bastion-sg"
     description = "Security group for the bastion host"
 
     ingress_rules = [

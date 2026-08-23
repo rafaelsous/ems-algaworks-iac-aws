@@ -10,7 +10,7 @@ locals {
   }
 
   bastion_security_group_config = var.bastion_security_group_config != null ? var.bastion_security_group_config : {
-    name        = "${var.environment}-${local.context_name}-bastion_sg"
+    name        = "${var.environment}-${local.context_name}-bastion-sg"
     description = "Security group for the bastion host"
 
     ingress_rules = [
@@ -32,6 +32,31 @@ locals {
         description = "Allow HTTPS from the internet"
         from_port   = 443
         to_port     = 443
+        protocol    = "tcp"
+        cidr_blocks = [var.vpc_cidr_block]
+      }
+    ]
+
+    egress_rules = [
+      {
+        description = "Allow all outbound traffic"
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = [local.internet_cidr_block]
+      }
+    ]
+  }
+
+  db_security_group_config = var.db_security_group_config != null ? var.db_security_group_config : {
+    name        = "${var.environment}-${local.context_name}-db-sg"
+    description = "Security group for the database host"
+
+    ingress_rules = [
+      {
+        description = "Allow PostgreSQL from the bastion host"
+        from_port   = local.db_port
+        to_port     = local.db_port
         protocol    = "tcp"
         cidr_blocks = [var.vpc_cidr_block]
       }
