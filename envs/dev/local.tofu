@@ -73,5 +73,31 @@ locals {
     ]
   }
 
-  db_port = 5432
+  elasticache_security_group_config = var.elasticache_security_group_config != null ? var.elasticache_security_group_config : {
+    name        = "${var.environment}-${local.context_name}-cache-sg"
+    description = "Security group for the cache host"
+
+    ingress_rules = [
+      {
+        description = "Allow cache from the bastion host"
+        from_port   = local.cache_port
+        to_port     = local.cache_port
+        protocol    = "tcp"
+        cidr_blocks = [var.vpc_cidr_block]
+      }
+    ]
+
+    egress_rules = [
+      {
+        description = "Allow all outbound traffic"
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = [local.internet_cidr_block]
+      }
+    ]
+  }
+
+  db_port    = 5432
+  cache_port = 6379
 }

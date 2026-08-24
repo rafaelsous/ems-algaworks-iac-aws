@@ -103,3 +103,212 @@ variable "bastion_security_group_config" {
   })
   default = null
 }
+
+variable "db_subnet_group_name" {
+  description = "The name of the RDS DB subnet group"
+  type        = string
+  default     = "algadelivery-db-subnet-group"
+}
+
+variable "db_parameter_group_name" {
+  description = "The name of the RDS DB parameter group"
+  type        = string
+  default     = "algadelivery-db-parameter-group"
+}
+
+variable "db_parameter_group_options" {
+  description = "Additional options for the RDS DB parameter group"
+  type        = map(string)
+  default = {
+    max_connections          = "300"
+    shared_preload_libraries = "pg_stat_statements,pgaudit"
+  }
+}
+
+variable "db_engine" {
+  description = "The database engine for the RDS instance"
+  type        = string
+  default     = "postgres"
+}
+
+variable "db_engine_version" {
+  description = "The database engine version for the RDS instance"
+  type        = string
+  default     = "18"
+}
+
+variable "db_name" {
+  description = "The name of the database to create when the DB instance is created"
+  type        = string
+  default     = "delivery"
+}
+
+variable "db_instance_class" {
+  description = "The instance class for the RDS DB instance"
+  type        = string
+  default     = "db.t4g.micro"
+}
+
+variable "db_username" {
+  description = "The username for the RDS DB instance"
+  type        = string
+  default     = "postgres"
+}
+
+variable "db_allocated_storage" {
+  description = "The allocated storage in gigabytes for the RDS DB instance"
+  type        = number
+  default     = 20
+}
+
+variable "db_multi_az" {
+  description = "Specifies if the RDS instance is multi-AZ"
+  type        = bool
+  default     = false
+}
+
+variable "db_skip_final_snapshot" {
+  description = "Determines whether a final DB snapshot is created before the DB instance is deleted"
+  type        = bool
+  default     = true
+}
+
+variable "db_instance_identifier" {
+  description = "The identifier for the RDS DB instance"
+  type        = string
+  default     = "algadelivery-db"
+}
+
+variable "db_port" {
+  description = "The port on which the DB instance accepts connections"
+  type        = number
+  default     = 5432
+}
+
+variable "db_security_group_config" {
+  type = object({
+    name        = string
+    description = string
+
+    ingress_rules = list(object({
+      description = string
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+    }))
+
+    egress_rules = list(object({
+      description = string
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+    }))
+  })
+  default = null
+}
+
+variable "db_backup_retention_period" {
+  description = "The number of days to retain backups for the RDS instance"
+  type        = number
+  default     = 1
+}
+
+variable "db_backup_window" {
+  description = "The daily time range during which automated backups are created"
+  type        = string
+  default     = "04:00-05:00"
+}
+
+variable "db_maintenance_window" {
+  description = "The weekly time range during which system maintenance can occur"
+  type        = string
+  default     = "Mon:01:00-Mon:02:00"
+}
+
+variable "elasticache_name" {
+  description = "The name of the ElastiCache serverless cache"
+  type        = string
+  default     = "algadelivery-cache"
+}
+
+variable "elasticache_description" {
+  description = "The description of the ElastiCache serverless cache"
+  type        = string
+  default     = "ElastiCache serverless cache for algadelivery"
+}
+
+variable "elasticache_engine" {
+  description = "The cache engine for the ElastiCache serverless cache"
+  type        = string
+  default     = "valkey"
+}
+
+variable "elasticache_major_engine_version" {
+  description = "The cache engine version for the ElastiCache serverless cache"
+  type        = string
+  default     = "9"
+}
+
+variable "elasticache_daily_snapshot_time" {
+  description = "The daily time range during which automated snapshots are created"
+  type        = string
+  default     = "02:00"
+}
+
+variable "elasticache_snapshot_retention_limit" {
+  description = "The number of days to retain snapshots for the ElastiCache serverless cache"
+  type        = number
+  default     = 7
+}
+
+variable "elasticache_request_ecpu_per_second" {
+  description = "The maximum number of eCPU per second for the ElastiCache serverless cache"
+  type = object({
+    minimum = number
+    maximum = number
+  })
+  default = {
+    minimum = 1000
+    maximum = 15000
+  }
+}
+
+variable "elasticache_data_storage" {
+  description = "The maximum data storage in GB for the ElastiCache serverless cache"
+  type = object({
+    minimum = number
+    maximum = number
+    unit    = string
+  })
+  default = {
+    minimum = 1
+    maximum = 30
+    unit    = "GB"
+  }
+}
+
+variable "elasticache_security_group_config" {
+  type = object({
+    name        = string
+    description = string
+
+    ingress_rules = list(object({
+      description = string
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+    }))
+
+    egress_rules = list(object({
+      description = string
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+    }))
+  })
+  default = null
+}
