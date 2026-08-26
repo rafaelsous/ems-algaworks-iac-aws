@@ -1,38 +1,38 @@
-variable "elasticache_name" {
+variable "name" {
   description = "The name of the ElastiCache serverless cache"
   type        = string
 }
 
-variable "elasticache_description" {
+variable "description" {
   description = "The description of the ElastiCache serverless cache"
   type        = string
 }
 
-variable "elasticache_engine" {
+variable "engine" {
   description = "The engine for the ElastiCache serverless cache"
   type        = string
   default     = "valkey"
 }
 
-variable "elasticache_major_engine_version" {
+variable "major_engine_version" {
   description = "The major engine version for the ElastiCache serverless cache"
   type        = string
   default     = "9"
 }
 
-variable "elasticache_daily_snapshot_time" {
+variable "daily_snapshot_time" {
   description = "The daily time range during which automated snapshots are created"
   type        = string
   default     = "02:00"
 }
 
-variable "elasticache_snapshot_retention_limit" {
+variable "snapshot_retention_limit" {
   description = "The number of days to retain snapshots for the ElastiCache serverless cache"
   type        = number
   default     = 1
 }
 
-variable "elasticache_request_ecpu_per_second" {
+variable "request_ecpu_per_second" {
   description = "The maximum number of eCPU per second for the ElastiCache serverless cache"
   type = object({
     minimum = number
@@ -44,7 +44,7 @@ variable "elasticache_request_ecpu_per_second" {
   }
 }
 
-variable "elasticache_data_storage" {
+variable "data_storage" {
   description = "The maximum data storage in GB for the ElastiCache serverless cache"
   type = object({
     minimum = number
@@ -58,7 +58,7 @@ variable "elasticache_data_storage" {
   }
 }
 
-variable "elasticache_security_group_config" {
+variable "security_group_config" {
   type = object({
     name        = string
     description = string
@@ -81,7 +81,7 @@ variable "elasticache_security_group_config" {
   })
 }
 
-variable "elasticache_subnet_ids" {
+variable "subnet_ids" {
   description = "The subnet IDs for the RDS DB subnet group"
   type        = list(string)
 }

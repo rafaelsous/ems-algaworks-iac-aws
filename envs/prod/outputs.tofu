@@ -103,3 +103,31 @@ output "db_instance_id" {
 output "db_instance_arn" {
   value = module.database.db_instance_arn
 }
+
+output "elasticache_endpoint_address" {
+  value = module.elasticache.endpoint_address
+}
+
+output "elasticache_endpoint_port" {
+  value = module.elasticache.endpoint_port
+}
+
+output "elasticache_read_endpoint_address" {
+  value = module.elasticache.reader_endpoint_address
+}
+
+output "elasticache_read_endpoint_port" {
+  value = module.elasticache.reader_endpoint_port
+}
+
+output "elasticache_arn" {
+  value = module.elasticache.arn
+}
+
+output "elasticache_status" {
+  value = module.elasticache.status
+}
+
+output "elasticache_security_group_id" {
+  value = module.elasticache.security_group_id
+}
