@@ -131,3 +131,18 @@ output "elasticache_status" {
 output "elasticache_security_group_id" {
   value = module.elasticache.security_group_id
 }
+
+output "msk_arn" {
+  description = "The ARN of the MSK cluster"
+  value       = module.msk.arn
+}
+
+output "msk_bootstrap_brokers_sasl_iam" {
+  description = "The endpoint of the MSK cluster"
+  value       = module.msk.bootstrap_brokers_sasl_iam
+}
+
+output "msk_security_group_id" {
+  description = "The ID of the security group"
+  value       = module.msk.security_group_id
+}

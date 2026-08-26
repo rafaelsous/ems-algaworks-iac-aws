@@ -98,6 +98,32 @@ locals {
     ]
   }
 
+  msk_security_group_config = var.msk_security_group_config != null ? var.msk_security_group_config : {
+    name        = "${var.environment}-${local.context_name}-msk-sg"
+    description = "Security group for the MSK cluster"
+
+    ingress_rules = [
+      {
+        description = "Allow all inbound traffic"
+        from_port   = local.msk_port
+        to_port     = local.msk_port
+        protocol    = "tcp"
+        cidr_blocks = [var.vpc_cidr_block]
+      }
+    ]
+
+    egress_rules = [
+      {
+        description = "Allow all outbound traffic"
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = [local.internet_cidr_block]
+      }
+    ]
+  }
+
   db_port    = 5432
   cache_port = 6379
+  msk_port   = 9098
 }
